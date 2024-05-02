@@ -43,6 +43,7 @@ public class FavoriteFragment extends Fragment {
     public FavoriteFragment() {
         // Required empty public constructor
        // from duc anh
+        // from duc anh 2
     }
 
     @Override
