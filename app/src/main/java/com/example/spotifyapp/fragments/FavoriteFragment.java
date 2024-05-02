@@ -42,6 +42,7 @@ public class FavoriteFragment extends Fragment {
 
     public FavoriteFragment() {
         // Required empty public constructor
+        // day la test
     }
 
     @Override
