@@ -42,8 +42,7 @@ public class FavoriteFragment extends Fragment {
 
     public FavoriteFragment() {
         // Required empty public constructor
-        // day la test
-        // h nhe khi ma toi code bao h toi bao ban update code di thi b bam theo toi nhe
+       // from duc anh
     }
 
     @Override
