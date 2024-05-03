@@ -3,64 +3,61 @@ package com.example.spotifyapp.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.spotifyapp.R;
+import com.example.spotifyapp.adapters.SinhVienAdapter;
+import com.example.spotifyapp.databinding.FragmentLibraryBinding;
+import com.example.spotifyapp.models.FirebaseHelper;
+import com.example.spotifyapp.models.SinhVien;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LibraryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.List;
+
+
 public class LibraryFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private FragmentLibraryBinding binding;
+    private FirebaseHelper firebaseHelper;
+    private SinhVienAdapter sinhVienAdapter;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public LibraryFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LibraryFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static LibraryFragment newInstance(String param1, String param2) {
-        LibraryFragment fragment = new LibraryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_library, container, false);
+        binding = FragmentLibraryBinding.inflate(inflater, container, false);
+        firebaseHelper = new FirebaseHelper();
+        binding.btnAdd.setOnClickListener(v -> {
+            String maSv = binding.etMaSv.getText().toString();
+            String hoTen = binding.etHoTen.getText().toString();
+            String diaChi = binding.etDiaChi.getText().toString();
+            String ngaySinh = binding.etNgaySinh.getText().toString();
+            String gioiTinh = binding.etGioiTinh.getText().toString();
+            String email = binding.etEmail.getText().toString();
+            float diemTb = Float.parseFloat(binding.etDtb.getText().toString());
+
+            SinhVien sinhVien = new SinhVien(maSv, hoTen, diaChi, ngaySinh, gioiTinh, email, diemTb);
+            firebaseHelper.themMoiSinhVien(sinhVien);
+        });
+
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        sinhVienAdapter = new SinhVienAdapter(firebaseHelper.hienDanhSachSinhVien());
+        binding.recyclerView.setAdapter(sinhVienAdapter);
+        return binding.getRoot();
     }
 }
