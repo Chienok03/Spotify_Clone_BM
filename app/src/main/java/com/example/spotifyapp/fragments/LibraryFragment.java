@@ -56,8 +56,43 @@ public class LibraryFragment extends Fragment {
         });
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        sinhVienAdapter = new SinhVienAdapter(firebaseHelper.hienDanhSachSinhVien());
-        binding.recyclerView.setAdapter(sinhVienAdapter);
+        binding.btnGetAll.setOnClickListener(v ->{
+            firebaseHelper.hienDanhSachSinhVien(0,new FirebaseHelper.DataStatus() {
+                @Override
+                public void DataIsLoaded(List<SinhVien> sinhViens, List<String> keys) {
+                    sinhVienAdapter = new SinhVienAdapter(sinhViens);
+                    binding.recyclerView.setAdapter(sinhVienAdapter);
+                }
+
+                @Override
+                public void DataIsInserted() {}
+
+                @Override
+                public void DataIsUpdated() {}
+
+                @Override
+                public void DataIsDeleted() {}
+            });
+        });
+
+        binding.btnFilter.setOnClickListener(v -> {
+            firebaseHelper.hienDanhSachSinhVien(7,new FirebaseHelper.DataStatus() {
+                @Override
+                public void DataIsLoaded(List<SinhVien> sinhViens, List<String> keys) {
+                    sinhVienAdapter = new SinhVienAdapter(sinhViens);
+                    binding.recyclerView.setAdapter(sinhVienAdapter);
+                }
+
+                @Override
+                public void DataIsInserted() {}
+
+                @Override
+                public void DataIsUpdated() {}
+
+                @Override
+                public void DataIsDeleted() {}
+            });
+        });
         return binding.getRoot();
     }
 }

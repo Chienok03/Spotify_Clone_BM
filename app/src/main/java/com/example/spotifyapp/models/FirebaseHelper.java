@@ -22,27 +22,27 @@ public class FirebaseHelper {
         database.getReference().child("SinhVien").child(id).setValue(sinhVien);
     }
 
-    public List<SinhVien> hienDanhSachSinhVien() {
-        List<SinhVien> sinhVienList = new ArrayList<>();
+    public void hienDanhSachSinhVien(float diemTb, DataStatus dataStatus) {
         database.getReference().child("SinhVien").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                sinhVienList.clear();
+                List<SinhVien> sinhVienList = new ArrayList<>();
+                List<String> keys = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     SinhVien sinhVien = dataSnapshot.getValue(SinhVien.class);
-                    sinhVienList.add(sinhVien);
+                    if (sinhVien.getDiemTb() > diemTb) {
+                        keys.add(dataSnapshot.getKey());
+                        sinhVienList.add(sinhVien);
+                    }
                 }
-                // Use sinhVienList
+                dataStatus.DataIsLoaded(sinhVienList, keys);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-
         });
-
-        return sinhVienList;
     }
 
     public void locDanhSachSinhVien() {

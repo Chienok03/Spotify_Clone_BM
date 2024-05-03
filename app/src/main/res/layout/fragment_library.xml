@@ -59,12 +59,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Diem trung binh" />
-
-            <Button
-                android:id="@+id/btnAdd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btnAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add" />
+                <Button
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/btnGetAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Get All" />
+                <Button
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/btnFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filter" />
+            </LinearLayout>
 
         </LinearLayout>
 
